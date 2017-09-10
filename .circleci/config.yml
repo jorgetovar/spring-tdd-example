@@ -21,7 +21,9 @@ jobs:
             - ~/.m2
           key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
       
-      - run: mvn clean install
+      - run: mvn package
+      
+      - run: mvn test
       
       - store_test_results:
           path: target/jacoco-ut/index.html
