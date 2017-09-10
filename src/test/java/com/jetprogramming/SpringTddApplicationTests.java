@@ -1,6 +1,9 @@
 package com.jetprogramming;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,7 @@ public class SpringTddApplicationTests {
 	@Test
 	public final void when2NumbersAreUsedThenNoExceptionIsThrown() {
 		sumProvider.add("1,2");
-		Assert.assertTrue(true);
+		assertTrue(true);
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -29,32 +32,32 @@ public class SpringTddApplicationTests {
 
 	@Test
 	public final void whenEmptyStringIsUsedThenReturnValueIs0() {
-		Assert.assertEquals(0, sumProvider.add(""));
+		assertEquals(0, sumProvider.add(""));
 	}
 
 	@Test
 	public final void whenOneNumberIsUsedThenReturnValueIsThatSameNumber() {
-		Assert.assertEquals(3, sumProvider.add("3"));
+		assertEquals(3, sumProvider.add("3"));
 	}
 
 	@Test
 	public final void whenTwoNumbersAreUsedThenReturnValueIsTheirSum() {
-		Assert.assertEquals(3 + 6, sumProvider.add("3,6"));
+		assertEquals(3 + 6, sumProvider.add("3,6"));
 	}
 
 	@Test
 	public final void whenAnyNumberOfNumbersIsUsedThenReturnValuesAreTheirSums() {
-		Assert.assertEquals(3 + 6 + 15 + 18 + 46 + 33, sumProvider.add("3,6,15,18,46,33"));
+		assertEquals(3 + 6 + 15 + 18 + 46 + 33, sumProvider.add("3,6,15,18,46,33"));
 	}
 
 	@Test
 	public final void whenNewLineIsUsedBetweenNumbersThenReturnValuesAreTheirSums() {
-		Assert.assertEquals(3 + 6 + 15, sumProvider.add("3,6\n15"));
+		assertEquals(3 + 6 + 15, sumProvider.add("3,6\n15"));
 	}
 
 	@Test
 	public final void whenDelimitedIsSpecifiedThenItIsUsedToSeparateNumbers() {
-		Assert.assertEquals(3 + 6 + 15, sumProvider.add("//;\n3;6;15"));
+		assertEquals(3 + 6 + 15, sumProvider.add("//;\n3;6;15"));
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -70,13 +73,13 @@ public class SpringTddApplicationTests {
 		} catch (RuntimeException e) {
 			exception = e;
 		}
-		Assert.assertNotNull(exception);
-		Assert.assertEquals("Negatives not allowed: [-6, -18]", exception.getMessage());
+		assertNotNull(exception);
+		assertEquals("Negatives not allowed: [-6, -18]", exception.getMessage());
 	}
 
 	@Test
 	public final void whenOneOrMoreNumbersAreGreaterThan1000IsUsedThenItIsNotIncludedInSum() {
-		Assert.assertEquals(3 + 1000 + 6, sumProvider.add("3,1000,1001,6,1234"));
+		assertEquals(3 + 1000 + 6, sumProvider.add("3,1000,1001,6,1234"));
 	}
 
 }
